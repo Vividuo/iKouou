@@ -1,16 +1,5 @@
 <template>
-<div class="page">
-    <Card>
-        <p slot="title">
-            <Icon type="android-checkbox-outline"></Icon>
-            用户列表
-        </p>
-        <a type="text" slot="extra">
-            <Icon type="plus-round"></Icon>
-        </a>
-        <Table border :columns="columns" :data="data"></Table>
-    </Card>
-</div>
+    <Table border :columns="columns" :data="data"></Table>
 </template>
 <script>
 export default {

@@ -18,25 +18,58 @@ export default [{
         component: () => import('../components/Dashboard')
     }, {
         path: 'users',
-        name: 'user.list',
-        meta: {
-            title: '用户列表'
-        },
-        component: () => import('../components/User/List')
+        component: () => import('../components/User'),
+        children: [{
+            path: '',
+            name: 'user.list',
+            meta: {
+                title: '用户列表'
+            },
+            component: () => import('../components/User/List')
+        }, {
+            path: 'add',
+            name: 'user.add',
+            meta: {
+                title: '新增用户'
+            },
+            component: () => import('../components/User/Add')
+        }]
     }, {
         path: 'roles',
-        name: 'role.list',
-        meta: {
-            title: '角色列表'
-        },
-        component: () => import('../components/User/Role')
+        component: () => import('../components/Role'),
+        children: [{
+            path: '',
+            name: 'role.list',
+            meta: {
+                title: '角色列表'
+            },
+            component: () => import('../components/Role/List')
+        }, {
+            path: 'add',
+            name: 'role.add',
+            meta: {
+                title: '新增角色'
+            },
+            component: () => import('../components/Role/Add')
+        }]
     }, {
         path: 'accesses',
-        name: 'access.list',
-        meta: {
-            title: '权限列表'
-        },
-        component: () => import('../components/User/Access')
+        component: () => import('../components/Access'),
+        children: [{
+            path: '',
+            name: 'access.list',
+            meta: {
+                title: '用户权限'
+            },
+            component: () => import('../components/Access/List')
+        }, {
+            path: 'add',
+            name: 'access.add',
+            meta: {
+                title: '新增权限'
+            },
+            component: () => import('../components/Access/Add')
+        }]
     }, {
         path: 'avatars',
         component: () => import('../components/Avatar'),

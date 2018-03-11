@@ -29,18 +29,18 @@
                 <Sider >
                     <Menu active-name="dashboard" theme="dark" width="auto" :open-names="[]" @on-select="handleMenuSelect">
                         <MenuItem name="dashboard">
-                            <Icon type="ios-home"></Icon>
+                            <Icon type="home"></Icon>
                             控制台
                         </MenuItem>
                         <Submenu name="1">
                             <template slot="title">
-                                <Icon type="ios-person" size="24"></Icon>
-                                用户管理
+                                <Icon type="person"></Icon>
+                                账号相关
                             </template>
-                            <MenuItem name="user.list">用户列表</MenuItem>
-                            <MenuItem name="role.list">角色列表</MenuItem>
-                            <MenuItem name="access.list">权限列表</MenuItem>
-                            <MenuItem name="avatar.list">头像列表</MenuItem>
+                            <MenuItem name="user.list">用户管理</MenuItem>
+                            <MenuItem name="role.list">角色管理</MenuItem>
+                            <MenuItem name="access.list">权限管理</MenuItem>
+                            <MenuItem name="avatar.list">头像管理</MenuItem>
                         </Submenu>
                         <Submenu name="2">
                             <template slot="title">
