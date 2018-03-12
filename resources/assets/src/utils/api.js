@@ -1,6 +1,7 @@
 import { Message } from 'iview'
 import axios from 'axios'
-const origin = process.env.NODE_ENV === 'development' ? '//test.ikouou.com' : '//www.ikouou.com'
+import store from '@/store'
+const origin = process.env.NODE_ENV === 'development' ? '//test.ikouou.com' : '//test.ikouou.com'
 const api = {
     get (path, params) {
         const options = {
@@ -14,7 +15,7 @@ const api = {
             method: 'post',
             data: params,
             headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                'X-CSRF-TOKEN': store.state.app.token
             }
         }
         return this.fetch(path, options)
@@ -22,11 +23,14 @@ const api = {
     fetch (path, options) {
         return new Promise((resolve, reject) => {
             options = Object.assign({
-                url: origin + path
+                url: origin + path,
+                withCredentials: true
             }, options)
             axios(options).then(res => {
                 if (res.data.code === '200') {
                     resolve(res.data)
+                } else if (res.data.code === '422') {
+                    Message.error(res.data.msg)
                 } else {
                     Message.warning(res.data.msg)
                     if (res.data.code === '401') {
@@ -46,8 +50,8 @@ const api = {
                     }, 1000)
                 } else {
                     Message.error('妈呀，服务器跑偏了，稍后再试一下吧')
-                    reject(err)
                 }
+                reject(err)
             })
         })
     }

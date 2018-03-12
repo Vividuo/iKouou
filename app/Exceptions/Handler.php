@@ -44,6 +44,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //处理ajax请求
+        if ($request->ajax() || $request->wantsJson()) {
+            //当抛出验证异常时，设置错误信息为验证失败原因
+            if ($exception instanceof \Illuminate\Validation\ValidationException) {
+                $message = $exception->validator->errors()->first();
+                $status = '422';
+            } else if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+                $message = '服务器资源找不到';
+                $status = '404';
+            } else if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+                $message = '当前用户没有访问权限';
+                $status = '401';
+            } else if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
+                $message = $exception->getMessage();
+                $status = $exception->getStatusCode();
+            } else {
+                $message = get_class($exception).' '.$exception->getMessage();
+                $status = '500';
+            }
+
+            return response()->json(['code' => $status, 'msg' => $message], '200');
+        }
         return parent::render($request, $exception);
     }
 

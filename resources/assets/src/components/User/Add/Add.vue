@@ -3,8 +3,8 @@
         <Col span="18" >
             <Card>
                 <Form ref="form" :model="form" :rules="rules" :label-width="100">
-                    <FormItem label="用户名：" prop="name">
-                        <Input v-model="form.name" placeholder="字母开头的4至12位字母数字和下划线"/>
+                    <FormItem label="用户名：" prop="username">
+                        <Input v-model="form.username" placeholder="字母开头的4至12位字母数字和下划线"/>
                     </FormItem>
                     <FormItem label="密码：" prop="password">
                         <Input type="password" v-model="form.password" placeholder="6至16位字母或数字"/>
@@ -36,6 +36,7 @@
     </Row>
 </template>
 <script>
+import api from '@/utils/api'
 export default {
     data () {
         const validatePasswordConfirm = (rule, value, callback) => {
@@ -47,14 +48,14 @@ export default {
         }
         return {
             form: {
-                name: '',
+                username: '',
                 email: '',
                 mobile: '',
                 password: '',
                 passwordConfirm: ''
             },
             rules: {
-                name: [
+                username: [
                     { required: true, message: '账号是必填项', trigger: 'blur' },
                     { pattern: /^[a-zA-z]\w{4,12}$/, message: '账号格式不正确', trigger: 'blur' }
                 ],
@@ -76,8 +77,29 @@ export default {
         }
     },
     methods: {
+        handleReset () {
+            this.form = {
+                username: '',
+                email: '',
+                mobile: '',
+                password: '',
+                passwordConfirm: ''
+            }
+        },
         handleSubmit () {
-            console.log(this.form)
+            this.$refs['form'].validate((valid) => {
+                if (valid) {
+                    api.post('/api/user/add', {
+                        username: this.form.username,
+                        password: this.form.password,
+                        email: this.form.email,
+                        mobile: this.form.mobile,
+                    }).then(data => {
+                        this.$Message.success('添加成功！')
+                        this.handleReset()
+                    })
+                }
+            })
         }
     }
 }

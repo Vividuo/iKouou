@@ -10,8 +10,8 @@
                 </p>
                 <div class="form-con">
                     <Form ref="loginForm" :model="form" :rules="rules">
-                        <FormItem prop="userName">
-                            <Input v-model="form.userName" placeholder="请输入用户名">
+                        <FormItem prop="username">
+                            <Input v-model="form.username" placeholder="请输入用户名">
                                 <span slot="prepend">
                                     <Icon :size="16" type="person"></Icon>
                                 </span>
@@ -40,6 +40,7 @@
 </style>
 
 <script>
+import api from '@/utils/api'
 import avatar from '@/assets/avatar.png'
 export default {
     data () {
@@ -48,7 +49,7 @@ export default {
 
             },
             form: {
-                userName: '',
+                username: '',
                 password: ''
             },
             rules: {
@@ -80,9 +81,12 @@ export default {
         },
         handleLogin () {
             let _this = this
-            if (this.form.userName === 'root' && this.form.password === 'root') {
+            api.post('/api/login', {
+                username: this.form.username,
+                password: this.form.password
+            }).then(data => {
                 this.$store.commit('userLogin', {
-                    name: this.form.userName,
+                    name: data.result.username,
                     avatar
                 })
                 this.$Message.loading({
@@ -94,12 +98,21 @@ export default {
                         })
                     }
                 })
-            } else {
+            }, error => {
                 this.$Message.error({
                     content: '用户名或密码错误',
                     duration: 3
                 })
-            }
+            })
+            // if (this.form.userName === 'root' && this.form.password === 'root') {
+            //     this.$store.commit('userLogin', {
+            //         name: this.form.userName,
+            //         avatar
+            //     })
+            //
+            // } else {
+            //
+            // }
         }
     }
 }

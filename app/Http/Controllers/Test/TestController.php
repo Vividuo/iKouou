@@ -8,7 +8,13 @@ class TestController extends BaseController
 {
     public function index ()
     {
-        $result = \DB::table('users')->get();
-        dd($result);
+        $user = \DB::table('users')->where('name', 'vividuo')->first();
+
+        if (\Hash::check('chen123', $user->password)) {
+            // 密码匹配...
+            return 'y';
+        } else {
+            return 'no';
+        }
     }
 }

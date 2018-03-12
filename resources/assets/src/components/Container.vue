@@ -79,6 +79,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import api from '@/utils/api'
 export default {
     data () {
         return {
@@ -100,6 +101,7 @@ export default {
     methods: {
         handleMenuSelect (name) {
             if (name === 'logout') {
+                api.get('/api/logout')
                 this.$store.commit('userLogout')
                 name = 'login'
             }

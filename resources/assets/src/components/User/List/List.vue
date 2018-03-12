@@ -1,7 +1,11 @@
 <template>
-    <Table border :columns="columns" :data="data"></Table>
+    <div>
+        <Table border :columns="columns" :data="data" :style="{marginBottom: '12px'}"></Table>
+        <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
+    </div>
 </template>
 <script>
+import api from '@/utils/api'
 export default {
     data () {
         return {
@@ -15,20 +19,39 @@ export default {
                 title: '手机号',
                 key: 'mobile'
             }, {
+                title: '邮箱',
+                key: 'email'
+            }, {
                 title: '角色',
                 key: 'roles'
             }, {
                 title: '操作'
             }],
-            data: [
-                {id: 1, username: 'root', mobile: '13701960700', roles: 'super admin'},
-                {id: 2, username: 'root2', mobile: '13701960700', roles: 'super admin'},
-                {id: 3, username: 'root3', mobile: '13701960700', roles: 'super admin'}
-            ]
+            data: [],
+            pager: {
+                total: 0,
+                current: 1,
+                size: 10
+            }
+        }
+    },
+    methods: {
+        handlePagerChange (page) {
+            this.pager.current = page
+            this.fetchData()
+        },
+        fetchData () {
+            api.get('/api/user/list', {
+                page: this.pager.current,
+                size: this.pager.size
+            }).then(data => {
+                this.data = data.result.data
+                this.pager.total = data.result.total
+            })
         }
     },
     mounted () {
-
+        this.fetchData()
     }
 }
 </script>
