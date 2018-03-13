@@ -17,6 +17,13 @@ export default [{
         },
         component: () => import('../components/Dashboard')
     }, {
+        path: 'profile',
+        name: 'profile',
+        meta: {
+            title: '修改个人信息'
+        },
+        component: () => import('../components/User/Profile')
+    }, {
         path: 'users',
         component: () => import('../components/User'),
         children: [{

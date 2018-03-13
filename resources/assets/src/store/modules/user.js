@@ -1,16 +1,25 @@
+import avatar from '@/assets/default-avatar.png'
 const user = {
     state: {
         name: '',
-        avatar: ''
+        mobile: '',
+        email: '',
+        avatar: avatar
     },
     mutations: {
-        userLogin (state, payload) {
-            state.name = payload.name
-            state.avatar = payload.avatar
+        updateUser (state, payload) {
+            state.name = payload.username
+            state.mobile = payload.mobile
+            state.email = payload.email
+            if (payload.avatar) {
+                state.avatar = payload.avatar
+            }
         },
-        userLogout (state, payload) {
+        resetUser (state, payload) {
             state.name = ''
-            state.avatar = ''
+            state.mobile = ''
+            state.email = ''
+            state.avatar = avatar
         }
     }
 }

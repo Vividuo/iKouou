@@ -1,7 +1,7 @@
 import { Message } from 'iview'
 import axios from 'axios'
 import store from '@/store'
-const origin = process.env.NODE_ENV === 'development' ? '//test.ikouou.com' : '//test.ikouou.com'
+const origin = process.env.NODE_ENV === 'development' ? '//test.ikouou.com' : '//www.ikouou.com'
 const api = {
     get (path, params) {
         const options = {
@@ -29,17 +29,9 @@ const api = {
             axios(options).then(res => {
                 if (res.data.code === '200') {
                     resolve(res.data)
-                } else if (res.data.code === '422') {
-                    Message.error(res.data.msg)
                 } else {
                     Message.warning(res.data.msg)
-                    if (res.data.code === '401') {
-                        setTimeout(() => {
-                            location.reload()
-                        }, 1000)
-                    } else {
-                        reject(res.data)
-                    }
+                    reject(res.data)
                 }
             }).catch(err => {
                 console.log(err)

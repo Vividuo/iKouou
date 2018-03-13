@@ -21,6 +21,14 @@ Route::group(['prefix' => 'api', 'name' => 'api', 'namespace' => 'Api'], functio
     Route::get('init', ['name' => 'init', 'uses' => 'IndexController@init']);
     Route::post('login', ['name' => 'login', 'uses' => 'IndexController@login']);
     Route::get('logout', ['name' => 'logout', 'uses' => 'IndexController@logout']);
-    Route::get('user/list', ['name' => 'user.list', 'uses' => 'UserController@pager']);
-    Route::post('user/add', ['name' => 'user.add', 'uses' => 'UserController@add']);
+    Route::post('file/upload', ['name' => 'file.upload', 'uses' => 'IndexController@upload']);
+    Route::group(['prefix' => 'user', 'name' => 'user'], function () {
+        Route::get('list', ['name' => 'list', 'uses' => 'UserController@lists']);
+        Route::post('add', ['name' => 'add', 'uses' => 'UserController@add']);
+        Route::post('edit', ['name' => 'edit', 'uses' => 'UserController@edit']);
+    });
+    Route::group(['prefix' => 'avatar', 'name' => 'avatar'], function () {
+        Route::get('list', ['name' => 'list', 'uses' => 'AvatarController@lists']);
+        Route::post('add', ['name' => 'add', 'uses' => 'AvatarController@add']);
+    });
 });

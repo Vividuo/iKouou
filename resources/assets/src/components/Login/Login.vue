@@ -41,7 +41,7 @@
 
 <script>
 import api from '@/utils/api'
-import avatar from '@/assets/avatar.png'
+// import avatar from '@/assets/avatar.png'
 export default {
     data () {
         return {
@@ -85,10 +85,7 @@ export default {
                 username: this.form.username,
                 password: this.form.password
             }).then(data => {
-                this.$store.commit('userLogin', {
-                    name: data.result.username,
-                    avatar
-                })
+                this.$store.commit('updateUser', data.result.user)
                 this.$Message.loading({
                     content: '登录成功',
                     duration: 1,
@@ -98,21 +95,7 @@ export default {
                         })
                     }
                 })
-            }, error => {
-                this.$Message.error({
-                    content: '用户名或密码错误',
-                    duration: 3
-                })
             })
-            // if (this.form.userName === 'root' && this.form.password === 'root') {
-            //     this.$store.commit('userLogin', {
-            //         name: this.form.userName,
-            //         avatar
-            //     })
-            //
-            // } else {
-            //
-            // }
         }
     }
 }

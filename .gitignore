@@ -1,4 +1,4 @@
 /resources/assets/node_modules
 /vendor
-/public/static
+/public
 .env

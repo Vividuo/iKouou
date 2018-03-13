@@ -19,8 +19,8 @@ class CreateRolesTable extends Migration
                 $table->collation = 'utf8_general_ci';
                 $table->charset = 'utf8';
                 $table->increments('id');
-                $table->string('name');
-                $table->string('slug');
+                $table->string('name', 32);
+                $table->string('slug', 32);
             });
         }
     }

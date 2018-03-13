@@ -7,7 +7,6 @@ const app = {
     },
     mutations: {
         updateToken (state, payload) {
-            console.log('update token', payload)
             state.token = payload
         }
     }

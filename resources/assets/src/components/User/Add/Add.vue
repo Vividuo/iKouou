@@ -18,6 +18,9 @@
                     <FormItem label="手机：" prop="mobile">
                         <Input v-model="form.mobile" placeholder="请输入联系手机号"/>
                     </FormItem>
+                    <FormItem label="头像：" prop="avatar">
+                        <Avatars @on-change="handleAvatarChange"></Avatars>
+                    </FormItem>
                 </Form>
             </Card>
         </Col>
@@ -37,7 +40,11 @@
 </template>
 <script>
 import api from '@/utils/api'
+import Avatars from '../Avatars'
 export default {
+    components: {
+        Avatars
+    },
     data () {
         const validatePasswordConfirm = (rule, value, callback) => {
             if (value !== this.form.password) {
@@ -51,9 +58,11 @@ export default {
                 username: '',
                 email: '',
                 mobile: '',
+                avatar: '',
                 password: '',
                 passwordConfirm: ''
             },
+
             rules: {
                 username: [
                     { required: true, message: '账号是必填项', trigger: 'blur' },
@@ -77,14 +86,19 @@ export default {
         }
     },
     methods: {
+
         handleReset () {
             this.form = {
                 username: '',
                 email: '',
                 mobile: '',
+                avatar: '',
                 password: '',
                 passwordConfirm: ''
             }
+        },
+        handleAvatarChange (item) {
+            this.form.avatar = item.url
         },
         handleSubmit () {
             this.$refs['form'].validate((valid) => {
@@ -94,6 +108,7 @@ export default {
                         password: this.form.password,
                         email: this.form.email,
                         mobile: this.form.mobile,
+                        avatar: this.form.avatar
                     }).then(data => {
                         this.$Message.success('添加成功！')
                         this.handleReset()

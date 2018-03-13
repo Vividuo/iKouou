@@ -8,15 +8,37 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function pager(Request $request)
+    public function lists(Request $request)
     {
 
         $size = $request->input('size') ?: 10;
         $paginate = User::paginate($size);
         return response()->json([
             'code' => '200',
-            'msg' => \Auth::user()->username,
+            'msg' => '',
             'result' => $paginate
+        ]);
+    }
+
+    public function edit(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'nullable|email',
+            'mobile' => ['nullable', 'regex:/^1[3|4|5|7|8][0-9]{9}$/'],
+            'avatar' => 'nullable|url'
+        ]);
+        $user = \Auth::user();
+        if ($request->input('email'))
+            $user->email = $request->input('email');
+        if ($request->input('mobile'))
+            $user->mobile = $request->input('mobile');
+        if ($request->input('avatar'))
+            $user->avatar = $request->input('avatar');
+        $user->save();
+        return response()->json([
+            'code' => '200',
+            'msg' => '',
+            'result' => $user
         ]);
     }
 
@@ -26,14 +48,16 @@ class UserController extends Controller
             'username' => 'required|unique:users|max:12|min:4',
             'password' => 'required|max:16|min:6',
             'email' => 'nullable|email',
-            'mobile' => ['nullable', 'regex:/^1[3|4|5|7|8][0-9]{9}$/']
+            'mobile' => ['nullable', 'regex:/^1[3|4|5|7|8][0-9]{9}$/'],
+            'avatar' => 'nullable|url'
         ]);
-        $user = new User();
-        $user->username = $request->input('username');
-        $user->password = \Hash::make($request->input('password'));
-        $user->mobile = $request->input('mobile');
-        $user->email = $request->input('email');
-        $user->save();
+        User::create([
+            'username' => $request->input('username'),
+            'password' => \Hash::make($request->input('password')),
+            'mobile' => $request->input('mobile'),
+            'email' => $request->input('email'),
+            'avatar' => $request->input('avatar')
+        ]);
         return response()->json([
             'code' => '200',
             'msg' => '',

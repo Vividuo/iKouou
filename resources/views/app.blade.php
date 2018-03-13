@@ -5,9 +5,9 @@
     <meta name=viewport content="width=device-width,initial-scale=1">
     <title>HTML</title>
     <meta name=csrf-token content="{{ csrf_token() }}">
-  <link href=/static/css/app.be4308427b9b33520339491695dc0c17.css rel=stylesheet></head>
+  <link href=/static/css/app.615a503e96a1d78d441f8eb0fed60d5b.css rel=stylesheet></head>
   <body>
     <div id=app></div>
     
-  <script type=text/javascript src=/static/js/manifest.c73cdce4695707b00bc5.js></script><script type=text/javascript src=/static/js/vendor.53b07501801f7082539d.js></script><script type=text/javascript src=/static/js/app.0fc802d9e59345b5c036.js></script></body>
+  <script type=text/javascript src=/static/js/manifest.c00fb59f678573f4d67e.js></script><script type=text/javascript src=/static/js/vendor.85a5d043b72a92852309.js></script><script type=text/javascript src=/static/js/app.afb4299748176de7bb2a.js></script></body>
 </html>

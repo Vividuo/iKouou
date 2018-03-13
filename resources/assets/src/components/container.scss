@@ -15,6 +15,10 @@
     top: 15px;
     left: 20px;
 }
+.ivu-layout {
+    position: relative;
+    z-index: 1;
+}
 .layout-nav {
     float: right;
 }

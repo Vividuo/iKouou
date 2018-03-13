@@ -35,6 +35,7 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
+      'iview$': 'iview/dist/iview.min.js',
       '@': resolve('src'),
     }
   },

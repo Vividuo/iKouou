@@ -2,7 +2,7 @@
     <div class="layout">
         <Layout :style="{minHeight: '100vh'}">
             <Header>
-                <Menu mode="horizontal" theme="dark" active-name="1">
+                <Menu mode="horizontal" theme="dark" :active-name="$route.name">
                     <div class="layout-logo"></div>
                     <div class="layout-nav">
                         <MenuItem name="1">
@@ -18,8 +18,16 @@
                             Item 3
                         </MenuItem>
                         <MenuItem name="4">
-                            <Avatar :src="user.avatar" style="background: #619fe7;margin-left: 10px;"></Avatar>
-                            {{ user.name }}
+                            <Dropdown @on-click="handleRedirect">
+                                <Avatar :src="user.avatar" style="background: #619fe7;margin-left: 10px;"></Avatar>
+                                {{ user.name }}
+                                <Icon type="arrow-down-b"></Icon>
+                                <DropdownMenu slot="list">
+                                    <DropdownItem name="profile">修改个人资料</DropdownItem>
+                                    <DropdownItem :disabled="true">修改密码</DropdownItem>
+                                    <DropdownItem name="logout" :divided="true">注销</DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
                         </MenuItem>
                     </div>
                 </Menu>
@@ -27,7 +35,7 @@
             </Header>
             <Layout>
                 <Sider >
-                    <Menu active-name="dashboard" theme="dark" width="auto" :open-names="[]" @on-select="handleMenuSelect">
+                    <Menu :active-name="$route.name" theme="dark" width="auto" :open-names="[]" @on-select="handleRedirect">
                         <MenuItem name="dashboard">
                             <Icon type="home"></Icon>
                             控制台
@@ -99,10 +107,10 @@ export default {
         })
     },
     methods: {
-        handleMenuSelect (name) {
+        handleRedirect (name) {
             if (name === 'logout') {
                 api.get('/api/logout')
-                this.$store.commit('userLogout')
+                this.$store.commit('resetUser')
                 name = 'login'
             }
             this.$router.push({name})
