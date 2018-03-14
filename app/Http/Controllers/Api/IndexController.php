@@ -10,9 +10,9 @@ class IndexController extends Controller
 {
     public function init (Request $request)
     {
-        //$avatar = $username === 'jiyuanxy' ? '/avatar/PI_Mei_Cute_Mei-min.png' : '/avatar/PI_McCree_Cute_McCree-min.png';
+        $user = \App\Models\User::with('accesses')->find(\Auth::user()->id);
         $data = [
-            'user' => \Auth::user(),
+            'user' => $user,
             'token' => csrf_token()
         ];
         return response()->json([
@@ -43,7 +43,6 @@ class IndexController extends Controller
             'password' => $request->input('password')
         ];
         if (\Auth::attempt($credentials)) {
-            //$avatar = \Auth::user()->username === 'jiyuanxy' ? '/avatar/PI_Mei_Cute_Mei-min.png' : 'avatar/PI_McCree_Cute_McCree-min.png';
             return response()->json([
                 'code' => '200',
                 'msg' => '',

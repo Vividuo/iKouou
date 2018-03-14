@@ -40,43 +40,29 @@ export default [{
                 title: '新增用户'
             },
             component: () => import('../components/User/Add')
+        }, {
+            path: ':id/edit',
+            name: 'user.edit',
+            meta: {
+                title: '修改用户'
+            },
+            component: () => import('../components/User/Edit')
         }]
     }, {
         path: 'roles',
-        component: () => import('../components/Role'),
-        children: [{
-            path: '',
-            name: 'role.list',
-            meta: {
-                title: '角色列表'
-            },
-            component: () => import('../components/Role/List')
-        }, {
-            path: 'add',
-            name: 'role.add',
-            meta: {
-                title: '新增角色'
-            },
-            component: () => import('../components/Role/Add')
-        }]
+        name: 'role',
+        meta: {
+            title: '用户角色'
+        },
+        component: () => import('../components/Role')
+
     }, {
         path: 'accesses',
-        component: () => import('../components/Access'),
-        children: [{
-            path: '',
-            name: 'access.list',
-            meta: {
-                title: '用户权限'
-            },
-            component: () => import('../components/Access/List')
-        }, {
-            path: 'add',
-            name: 'access.add',
-            meta: {
-                title: '新增权限'
-            },
-            component: () => import('../components/Access/Add')
-        }]
+        name: 'access',
+        meta: {
+            title: '用户权限'
+        },
+        component: () => import('../components/Access')
     }, {
         path: 'avatars',
         component: () => import('../components/Avatar'),

@@ -6,12 +6,22 @@
 </template>
 <script>
 import api from '@/utils/api'
+import Operations from './Operations.vue'
 export default {
+    components: {
+        Operations
+    },
     data () {
         return {
             columns: [{
-                title: '编号',
-                key: 'id'
+                width: 64,
+                render (h, {row}) {
+                    return h('Avatar', {
+                        props: {
+                            src: row.avatar
+                        }
+                    })
+                }
             }, {
                 title: '用户名',
                 key: 'username'
@@ -23,9 +33,22 @@ export default {
                 key: 'email'
             }, {
                 title: '角色',
-                key: 'roles'
+                render (h, {row}) {
+                    let tags = []
+                    row.roles.forEach(role => {
+                        tags.push(h('Tag', [role.title]))
+                    })
+                    return h('div', tags)
+                }
             }, {
-                title: '操作'
+                title: '操作',
+                render (h, {row}) {
+                    return h(Operations, {
+                        props: {
+                            user: row
+                        }
+                    })
+                }
             }],
             data: [],
             pager: {

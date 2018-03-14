@@ -46,8 +46,8 @@
                                 账号相关
                             </template>
                             <MenuItem name="user.list">用户管理</MenuItem>
-                            <MenuItem name="role.list">角色管理</MenuItem>
-                            <MenuItem name="access.list">权限管理</MenuItem>
+                            <MenuItem name="role">角色管理</MenuItem>
+                            <MenuItem name="access">权限管理</MenuItem>
                             <MenuItem name="avatar.list">头像管理</MenuItem>
                         </Submenu>
                         <Submenu name="2">

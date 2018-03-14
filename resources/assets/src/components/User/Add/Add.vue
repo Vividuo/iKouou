@@ -1,7 +1,8 @@
 <template>
     <Row :gutter="12">
-        <Col span="18" >
-            <Card>
+        <Col span="16" >
+            <Card :style="{marginBottom: '12px'}">
+                <h4 slot="title">基本信息</h4>
                 <Form ref="form" :model="form" :rules="rules" :label-width="100">
                     <FormItem label="用户名：" prop="username">
                         <Input v-model="form.username" placeholder="字母开头的4至12位字母数字和下划线"/>
@@ -18,32 +19,40 @@
                     <FormItem label="手机：" prop="mobile">
                         <Input v-model="form.mobile" placeholder="请输入联系手机号"/>
                     </FormItem>
-                    <FormItem label="头像：" prop="avatar">
-                        <Avatars @on-change="handleAvatarChange"></Avatars>
-                    </FormItem>
                 </Form>
             </Card>
+            <Card :style="{marginBottom: '12px'}">
+                <h4 slot="title">头像</h4>
+                <Avatars @on-change="handleAvatarChange"></Avatars>
+            </Card>
         </Col>
-        <Col span="6">
+        <Col span="8">
+            <Card :style="{marginBottom: '12px'}">
+                <h4 slot="title">角色</h4>
+                <RoleSelector @on-change="handleRolesChange"></RoleSelector>
+            </Card>
+            <Card :style="{marginBottom: '12px'}">
+                <h4 slot="title">权限</h4>
+                <AccessSelector @on-change="handleAccessesChange"></AccessSelector>
+            </Card>
             <Card :style="{marginBottom: '12px'}">
                 <h4 slot="title">发布</h4>
                 <Button type="primary" @click="handleSubmit">发布</Button>
             </Card>
-            <Card :style="{marginBottom: '12px'}">
-                <h4 slot="title">角色</h4>
-            </Card>
-            <Card>
-                <h4 slot="title">权限</h4>
-            </Card>
+
         </Col>
     </Row>
 </template>
 <script>
 import api from '@/utils/api'
 import Avatars from '../Avatars'
+import RoleSelector from '../RoleSelector'
+import AccessSelector from '../AccessSelector'
 export default {
     components: {
-        Avatars
+        Avatars,
+        RoleSelector,
+        AccessSelector
     },
     data () {
         const validatePasswordConfirm = (rule, value, callback) => {
@@ -56,11 +65,11 @@ export default {
         return {
             form: {
                 username: '',
+                password: '',
+                passwordConfirm: '',
                 email: '',
                 mobile: '',
-                avatar: '',
-                password: '',
-                passwordConfirm: ''
+                avatar: ''
             },
 
             rules: {
@@ -76,7 +85,7 @@ export default {
                 ],
                 password: [
                     { required: true, message: '密码是必填项', trigger: 'blur' },
-                    { pattern: /^[a-zA-z\d]{4,12}$/, message: '密码格式不正确', trigger: 'blur' }
+                    { pattern: /^[a-zA-z\d]{6,12}$/, message: '密码格式不正确', trigger: 'blur' }
                 ],
                 passwordConfirm: [
                     { required: true, message: '再输一次密码', trigger: 'blur' },
@@ -86,7 +95,6 @@ export default {
         }
     },
     methods: {
-
         handleReset () {
             this.form = {
                 username: '',
@@ -100,6 +108,12 @@ export default {
         handleAvatarChange (item) {
             this.form.avatar = item.url
         },
+        handleRolesChange (roles) {
+            this.form.roles = roles
+        },
+        handleAccessesChange (accesses) {
+            this.form.accesses = accesses
+        },
         handleSubmit () {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
@@ -108,10 +122,12 @@ export default {
                         password: this.form.password,
                         email: this.form.email,
                         mobile: this.form.mobile,
-                        avatar: this.form.avatar
+                        avatar: this.form.avatar,
+                        roles: this.form.roles,
+                        accesses: this.form.accesses
                     }).then(data => {
                         this.$Message.success('添加成功！')
-                        this.handleReset()
+                        this.$router.push({name: 'user.list'})
                     })
                 }
             })

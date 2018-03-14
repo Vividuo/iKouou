@@ -20,7 +20,7 @@ class CreateRolesTable extends Migration
                 $table->charset = 'utf8';
                 $table->increments('id');
                 $table->string('name', 32);
-                $table->string('slug', 32);
+                $table->string('slug', 32)->unique();
             });
         }
     }

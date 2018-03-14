@@ -1,6 +1,7 @@
 import avatar from '@/assets/default-avatar.png'
 const user = {
     state: {
+        id: '',
         name: '',
         mobile: '',
         email: '',
@@ -8,6 +9,7 @@ const user = {
     },
     mutations: {
         updateUser (state, payload) {
+            state.id = payload.id
             state.name = payload.username
             state.mobile = payload.mobile
             state.email = payload.email
@@ -16,6 +18,7 @@ const user = {
             }
         },
         resetUser (state, payload) {
+            state.id = ''
             state.name = ''
             state.mobile = ''
             state.email = ''

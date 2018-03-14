@@ -25,8 +25,15 @@
             </Card>
             <Card>
                 <h4 slot="title">权限</h4>
+                <Transfer
+                    :data="source"
+                    :target-keys="target"
+                    :render-format="renderTransfer"
+                    @on-change="handleAccessChange">
+                </Transfer>
             </Card>
         </Col>
+
     </Row>
 </template>
 <script>
@@ -44,6 +51,11 @@ export default {
     },
     data () {
         return {
+            source: [
+                {key: 'test', title: '测试'},
+                {key: 'avatar', title: '头像管理'}
+            ],
+            target: [],
             form: {
                 email: '',
                 mobile: '',
@@ -61,6 +73,12 @@ export default {
         }
     },
     methods: {
+        renderTransfer (item) {
+            return item.title
+        },
+        handleAccessChange (targetKeys, directions, moveKeys) {
+            this.target = targetKeys
+        },
         handleReset () {
             this.form = {
                 email: '',
@@ -74,7 +92,7 @@ export default {
         handleSubmit () {
             this.$refs['form'].validate((valid) => {
                 if (valid) {
-                    api.post('/api/user/edit', {
+                    api.post('/api/user/' + this.user.id + '/edit', {
                         email: this.form.email,
                         mobile: this.form.mobile,
                         avatar: this.form.avatar

@@ -15,7 +15,7 @@ class AlertUsersTable extends Migration
     {
         if (Schema::hasTable('users')) {
             Schema::table('users', function ($table) {
-                $table->string('avatar', 128);
+                $table->string('avatar', 128)->nullable();
             });
         }
     }
