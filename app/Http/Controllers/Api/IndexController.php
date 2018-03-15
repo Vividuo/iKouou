@@ -10,9 +10,11 @@ class IndexController extends Controller
 {
     public function init (Request $request)
     {
-        $user = \App\Models\User::with('accesses')->find(\Auth::user()->id);
+        $user = \Auth::user();
+        $permissions = $user ? $user->permissions() : [];
         $data = [
             'user' => $user,
+            'permissions' => $permissions,
             'token' => csrf_token()
         ];
         return response()->json([
@@ -47,7 +49,8 @@ class IndexController extends Controller
                 'code' => '200',
                 'msg' => '',
                 'result' => [
-                    'user' => \Auth::user()
+                    'user' => \Auth::user(),
+                    'permissions' => \Auth::user() ? \Auth::user()->permissions() : [],
                 ]
             ]);
         } else {

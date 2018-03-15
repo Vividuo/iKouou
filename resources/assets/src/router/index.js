@@ -27,4 +27,22 @@ router.afterEach((to) => {
     window.scrollTo(0, 0)
 })
 
+console.log(mapRoute(routes, 'avatar.add'))
+function mapRoute (routes, target) {
+    let result
+    routes.forEach(item => {
+        if (item.name === target) {
+            result = item
+            return false
+        }
+        if (item.children) {
+            result = mapRoute(item.children, target)
+            if (result) {
+                return false
+            }
+        }
+    })
+    return result
+}
+
 export default router

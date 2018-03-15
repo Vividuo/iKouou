@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
                 $status = '404';
             } else if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
                 $message = '当前用户没有访问权限';
-                $status = '401';
+                $status = '403';
             } else if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
                 $message = $exception->getMessage();
                 $status = $exception->getStatusCode();

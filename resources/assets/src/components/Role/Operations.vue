@@ -29,7 +29,7 @@ export default {
         handleDel () {
             this.$Modal.confirm({
                 title: '删除',
-                content: '确认删除权限"' + this.item.title + '"?',
+                content: '确认删除角色"' + this.item.title + '"?',
                 onOk () {
                     console.log('confirm ok')
                 }

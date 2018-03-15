@@ -53,6 +53,12 @@ export default {
         handleChange (options) {
             this.$emit('on-change', options)
         }
+    },
+    mounted () {
+        this.defaultAccesses.forEach(access => {
+            this.accesses.push(access.id)
+            this.labels.push(access.title)
+        })
     }
 }
 </script>

@@ -1,7 +1,3 @@
-<style lang="less">
-    @import './500.less';
-</style>
-
 <template>
     <div class="error500">
         <div class="error500-body-con">
@@ -20,17 +16,18 @@
 </template>
 
 <script>
+// import './500.scss'
 export default {
     name: 'Error500',
     methods: {
         backPage () {
-            this.$router.go(-1);
+            this.$router.go(-1)
         },
         goHome () {
             this.$router.push({
-                name: 'home_index'
-            });
+                name: 'dashboard'
+            })
         }
     }
-};
+}
 </script>

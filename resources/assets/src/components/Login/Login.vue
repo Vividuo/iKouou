@@ -1,4 +1,3 @@
-
 <template>
     <div class="login" @keydown.enter="handleSubmit" @mousemove="handleMove" >
         <div class="login-bg" :style="bgStyles"></div>
@@ -35,13 +34,9 @@
     </div>
 </template>
 
-<style lang="sass">
-@import './login.scss'
-</style>
-
 <script>
+import './login.scss'
 import api from '@/utils/api'
-// import avatar from '@/assets/avatar.png'
 export default {
     data () {
         return {
@@ -86,6 +81,7 @@ export default {
                 password: this.form.password
             }).then(data => {
                 this.$store.commit('updateUser', data.result.user)
+                this.$store.commit('updatePermissions', data.result.permissions)
                 this.$Message.loading({
                     content: '登录成功',
                     duration: 1,

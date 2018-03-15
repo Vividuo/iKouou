@@ -10,32 +10,7 @@
         <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
     </div>
 </template>
-<style lang="scss">
-.user-avatars {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 0 -6px;
-    .ivu-card {
-        margin: 6px;
-        width: 64px;
-        cursor: pointer;
-        &.active {
-            border-color: red;
-        }
-    }
-    .ivu-card-body {
-        padding: 6px;
-    }
-    .ivu-avatar {
-        width: 100%;
-        height: auto;
-        img {
-            display: block;
-        }
-    }
-}
-</style>
+
 <script>
 import api from '@/utils/api'
 export default {

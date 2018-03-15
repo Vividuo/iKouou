@@ -1,8 +1,11 @@
 <template>
     <Row class="page" :gutter="12">
         <Col span="16" >
-            <Table border :columns="columns" :data="list" :style="{marginBottom: '12px'}"></Table>
-            <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
+            <Card :style="{marginBottom: '12px'}">
+                <h4 slot="title">角色列表</h4>
+                <Table border :columns="columns" :data="list" :style="{marginBottom: '12px'}"></Table>
+                <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
+            </Card>
         </Col>
         <Col span="8">
             <Card :style="{marginBottom: '12px'}">
@@ -22,18 +25,85 @@
 </template>
 <script>
 import api from '@/utils/api'
+import AccessSelector from '../User/AccessSelector'
+import Operations from './Operations'
 export default {
+    components: {
+        AccessSelector,
+        Operations
+    },
     data () {
         return {
             columns: [{
-                title: '编号',
-                key: 'id'
-            }, {
                 title: '名称',
-                key: 'title'
+                key: 'title',
+                render: (h, {row}) => {
+                    let title = row.title
+                    let input = h('Input', {
+                        props: {
+                            placeholder: row.title
+                        },
+                        on: {
+                            input: function (val) {
+                                row.editForm.title = val
+                            }
+                        }
+                    })
+                    return row.editable ? input : title
+                }
             }, {
                 title: '标识符',
-                key: 'slug'
+                key: 'slug',
+                render: (h, {row}) => {
+                    let slug = row.slug
+                    let input = h('Input', {
+                        props: {
+                            placeholder: row.slug
+                        },
+                        on: {
+                            input: function (val) {
+                                row.editForm.slug = val
+                            }
+                        }
+                    })
+                    return row.editable ? input : slug
+                }
+            }, {
+                title: '权限',
+                key: 'access',
+                render: (h, {row}) => {
+                    let tags = []
+                    row.accesses.forEach(item => {
+                        let tag = h('Tag', [item.title])
+                        tags.push(tag)
+                    })
+                    let selector = h(AccessSelector, {
+                        props: {
+                            defaultAccesses: row.accesses
+                        },
+                        on: {
+                            'on-change': function (options) {
+                                row.editForm.accesses = options
+                            }
+                        }
+                    })
+                    return row.editable ? selector : tags
+                }
+            }, {
+                title: '操作',
+                width: 130,
+                align: 'center',
+                render: (h, {row}) => {
+                    return h(Operations, {
+                        props: {
+                            item: row
+                        },
+                        on: {
+                            'on-edit-submit': this.handleEditSubmit,
+                            'on-edit-toggle': this.handleEditToggle
+                        }
+                    })
+                }
             }],
             list: [],
             pager: {
@@ -56,6 +126,26 @@ export default {
         }
     },
     methods: {
+        handleEditSubmit (row) {
+            api.post('/api/role/' + row.id + '/edit', row.editForm).then(data => {
+                this.$Message.success('修改成功！')
+                this.list = this.list.map(item => {
+                    if (item.id === row.id) {
+                        item = data.result
+                    }
+                    return item
+                })
+            })
+        },
+        handleEditToggle (row) {
+            this.list = this.list.map(item => {
+                if (item.id === row.id) {
+                    item.editable = !item.editable
+                    item.editForm = {}
+                }
+                return item
+            })
+        },
         handleReset () {
             this.addForm = {
                 title: '',

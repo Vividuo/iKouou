@@ -10,7 +10,7 @@ class AvatarController extends Controller
 {
     public function lists(Request $request)
     {
-
+        $this->authorize('lists', Avatar::class);
         $size = $request->input('size') ?: 10;
         $paginate = Avatar::paginate($size);
         $paginate->transform(function($item) {
@@ -27,6 +27,7 @@ class AvatarController extends Controller
 
     public function add(Request $request)
     {
+        $this->authorize('add', Avatar::class);
         $this->validate($request, [
             'title' => 'required',
             'fid' => 'required|integer',

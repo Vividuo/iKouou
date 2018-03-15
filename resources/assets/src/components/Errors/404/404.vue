@@ -1,7 +1,3 @@
-<style lang="less">
-    @import './404.less';
-</style>
-
 <template>
     <div class="error404">
         <div class="error404-body-con">
@@ -18,17 +14,18 @@
 </template>
 
 <script>
+// import './404.scss'
 export default {
     name: 'Error404',
     methods: {
         backPage () {
-            this.$router.go(-1);
+            this.$router.go(-1)
         },
         goHome () {
             this.$router.push({
-                name: 'home_index'
-            });
+                name: 'dashboard'
+            })
         }
     }
-};
+}
 </script>

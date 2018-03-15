@@ -33,3 +33,45 @@
 .page > .ivu-menu-horizontal {
     margin-bottom: 12px;
 }
+
+.avatar-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 -12px;
+    .ivu-card {
+        margin: 12px;
+        width: 128px;
+    }
+    .ivu-avatar {
+        width: 100%;
+        height: auto;
+        img {
+            display: block;
+        }
+    }
+}
+.user-avatars {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 -6px;
+    .ivu-card {
+        margin: 6px;
+        width: 64px;
+        cursor: pointer;
+        &.active {
+            border-color: red;
+        }
+    }
+    .ivu-card-body {
+        padding: 6px;
+    }
+    .ivu-avatar {
+        width: 100%;
+        height: auto;
+        img {
+            display: block;
+        }
+    }
+}

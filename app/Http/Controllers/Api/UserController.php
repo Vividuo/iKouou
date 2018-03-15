@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function lists(Request $request)
     {
-
+        $this->authorize('lists', User::class);
         $size = $request->input('size') ?: 10;
         $paginate = User::with('roles')->paginate($size);
         return response()->json([
@@ -23,6 +23,7 @@ class UserController extends Controller
 
     public function info(User $user)
     {
+        $this->authorize('edit', $user);
         //触发关联关系加载
         $accesses = $user->accesses;
         $roles = $user->roles;
@@ -35,6 +36,7 @@ class UserController extends Controller
 
     public function edit(User $user, Request $request)
     {
+        $this->authorize('edit', $user);
         $this->validate($request, [
             'email' => 'nullable|email',
             'mobile' => ['nullable', 'regex:/^1[3|4|5|7|8][0-9]{9}$/'],
@@ -63,6 +65,7 @@ class UserController extends Controller
 
     public function add(Request $request)
     {
+        $this->authorize('edit', Role::class);
         $this->validate($request, [
             'username' => 'required|unique:users|max:12|min:4',
             'password' => 'required|max:16|min:6',

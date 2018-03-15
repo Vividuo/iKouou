@@ -10,10 +10,10 @@ class RoleController extends Controller
 {
     public function lists(Request $request)
     {
-
+        $this->authorize('lists', Role::class);
         $q = $request->input('q');
         $size = $request->input('size') ?: 10;
-        $query = Role::take($size);
+        $query = Role::with('accesses')->take($size);
         if ($q) {
             $query = $query->where('slug', 'like', '%' . $q . '%');
         }
@@ -31,6 +31,7 @@ class RoleController extends Controller
 
     public function add(Request $request)
     {
+        $this->authorize('add', Role::class);
         $this->validate($request, [
             'title' => 'required',
             'slug' => 'required',
@@ -48,7 +49,7 @@ class RoleController extends Controller
 
     public function edit(Role $role, Request $request)
     {
-
+        $this->authorize('edit', $role);
         if ($request->input('title'))
             $role->email = $request->input('title');
         if ($request->input('slug'))
@@ -57,6 +58,7 @@ class RoleController extends Controller
             $role->accesses()->sync($request->input('accesses'));
         }
         $role->save();
+        $role->accesses;
         return response()->json([
             'code' => '200',
             'msg' => '',

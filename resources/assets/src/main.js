@@ -14,6 +14,7 @@ Vue.config.productionTip = false
 api.get('/api/init').then(data => {
     store.commit('updateUser', data.result.user)
     store.commit('updateToken', data.result.token)
+    store.commit('updatePermissions', data.result.permissions)
 }).finally(() => {
     /* eslint-disable no-new */
     new Vue({

@@ -81,11 +81,8 @@
     </div>
 </template>
 
-<style lang="sass">
-@import './container.scss'
-</style>
-
 <script>
+// import './container.scss'
 import { mapState } from 'vuex'
 import api from '@/utils/api'
 export default {

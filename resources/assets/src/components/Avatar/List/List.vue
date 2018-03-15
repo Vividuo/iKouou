@@ -12,25 +12,6 @@
 
 </template>
 
-<style lang="scss">
-.avatar-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 0 -12px;
-    .ivu-card {
-        margin: 12px;
-        width: 128px;
-    }
-    .ivu-avatar {
-        width: 100%;
-        height: auto;
-        img {
-            display: block;
-        }
-    }
-}
-</style>
 <script>
 import api from '@/utils/api'
 export default {

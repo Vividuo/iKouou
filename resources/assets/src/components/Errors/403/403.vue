@@ -1,7 +1,3 @@
-<style lang="less">
-    @import './403.less';
-</style>
-
 <template>
     <div class="error403">
         <div class="error403-body-con">
@@ -18,17 +14,18 @@
 </template>
 
 <script>
+// import './403.scss'
 export default {
     name: 'Error403',
     methods: {
         backPage () {
-            this.$router.go(-1);
+            this.$router.go(-1)
         },
         goHome () {
             this.$router.push({
-                name: 'home_index'
-            });
+                name: 'dashboard'
+            })
         }
     }
-};
+}
 </script>

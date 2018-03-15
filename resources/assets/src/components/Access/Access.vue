@@ -1,8 +1,11 @@
 <template>
     <Row class="page" :gutter="12">
         <Col span="16" >
-            <Table border :columns="columns" :data="list" :style="{marginBottom: '12px'}"></Table>
-            <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
+            <Card :style="{marginBottom: '12px'}">
+                <h4 slot="title">权限列表</h4>
+                <Table border :columns="columns" :data="list" :style="{marginBottom: '12px'}"></Table>
+                <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
+            </Card>
         </Col>
         <Col span="8">
             <Card :style="{marginBottom: '12px'}">
@@ -37,6 +40,11 @@ export default {
                     let input = h('Input', {
                         props: {
                             placeholder: row.title
+                        },
+                        on: {
+                            input: function (val) {
+                                row.editForm.title = val
+                            }
                         }
                     })
                     return row.editable ? input : title
@@ -45,13 +53,18 @@ export default {
                 title: '标识符',
                 key: 'slug',
                 render: (h, {row}) => {
-                    let title = row.slug
+                    let slug = row.slug
                     let input = h('Input', {
                         props: {
                             placeholder: row.slug
+                        },
+                        on: {
+                            input: function (val) {
+                                row.editForm.slug = val
+                            }
                         }
                     })
-                    return row.editable ? input : title
+                    return row.editable ? input : slug
                 }
             }, {
                 title: '操作',
@@ -63,6 +76,7 @@ export default {
                             item: row
                         },
                         on: {
+                            'on-edit-submit': this.handleEditSubmit,
                             'on-edit-toggle': this.handleEditToggle
                         }
                     })
@@ -89,10 +103,22 @@ export default {
         }
     },
     methods: {
+        handleEditSubmit (row) {
+            api.post('/api/access/' + row.id + '/edit', row.editForm).then(data => {
+                this.$Message.success('修改成功！')
+                this.list = this.list.map(item => {
+                    if (item.id === row.id) {
+                        item = data.result
+                    }
+                    return item
+                })
+            })
+        },
         handleEditToggle (row) {
             this.list = this.list.map(item => {
                 if (item.id === row.id) {
                     item.editable = !item.editable
+                    item.editForm = {}
                 }
                 return item
             })

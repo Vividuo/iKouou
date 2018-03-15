@@ -1,4 +1,7 @@
 export default [{
+    path: '*',
+    redirect: {name: '404'}
+}, {
     path: '/login',
     name: 'login',
     meta: {
@@ -6,12 +9,36 @@ export default [{
     },
     component: () => import('../components/Login')
 }, {
+    path: '/errors',
+    component: () => import('../components/Errors'),
+    children: [{
+        path: '404',
+        name: '404',
+        meta: {
+            title: '页面不存在'
+        },
+        component: () => import('../components/Errors/404')
+    }, {
+        path: '403',
+        name: '403',
+        meta: {
+            title: '没有权限'
+        },
+        component: () => import('../components/Errors/403')
+    }, {
+        path: '500',
+        name: '500',
+        meta: {
+            title: '服务器错误'
+        },
+        component: () => import('../components/Errors/500')
+    }]
+}, {
     path: '/',
     component: () => import('../components/Container'),
     children: [{
         path: '',
         name: 'dashboard',
-        parent: 'login',
         meta: {
             title: '控制台'
         },
