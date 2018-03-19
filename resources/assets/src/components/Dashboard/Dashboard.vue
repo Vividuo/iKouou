@@ -88,7 +88,7 @@
 </template>
 
 <script>
-// import './dashboard.scss'
+import './dashboard.scss'
 import { mapState } from 'vuex'
 export default {
     data () {

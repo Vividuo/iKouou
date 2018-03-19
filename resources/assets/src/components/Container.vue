@@ -59,6 +59,10 @@
                             <MenuItem name="project.list">项目列表</MenuItem>
 
                         </Submenu>
+                        <MenuItem name="test">
+                            <Icon type="home"></Icon>
+                            测试
+                        </MenuItem>
                         <MenuItem name="logout">
                             <Icon type="log-out"></Icon>
                             注销
@@ -82,7 +86,7 @@
 </template>
 
 <script>
-// import './container.scss'
+import './container.scss'
 import { mapState } from 'vuex'
 import api from '@/utils/api'
 export default {

@@ -65,7 +65,7 @@ class UserController extends Controller
 
     public function add(Request $request)
     {
-        $this->authorize('edit', Role::class);
+        $this->authorize('edit', User::class);
         $this->validate($request, [
             'username' => 'required|unique:users|max:12|min:4',
             'password' => 'required|max:16|min:6',

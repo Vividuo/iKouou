@@ -51,6 +51,13 @@ export default [{
         },
         component: () => import('../components/User/Profile')
     }, {
+        path: 'test',
+        name: 'test',
+        meta: {
+            title: '测试'
+        },
+        component: () => import('../components/Test')
+    }, {
         path: 'users',
         component: () => import('../components/User'),
         children: [{

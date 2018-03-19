@@ -16,7 +16,7 @@
 </template>
 
 <script>
-// import './500.scss'
+import './500.scss'
 export default {
     name: 'Error500',
     methods: {

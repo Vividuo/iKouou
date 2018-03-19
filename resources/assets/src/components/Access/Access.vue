@@ -47,7 +47,7 @@ export default {
                             }
                         }
                     })
-                    return row.editable ? input : title
+                    return row.editable ? input : h('span', [title])
                 }
             }, {
                 title: '标识符',
@@ -64,7 +64,7 @@ export default {
                             }
                         }
                     })
-                    return row.editable ? input : slug
+                    return row.editable ? input : h('span', [slug])
                 }
             }, {
                 title: '操作',

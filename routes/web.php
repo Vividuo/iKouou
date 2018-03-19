@@ -11,19 +11,22 @@
 |
 */
 
-Route::get('/', ['as' => 'login', 'uses' => function() {
+Route::get('/', ['as' => 'login', 'uses' => function () {
     return view('app');
 }]);
 
 Route::group(['prefix' => 'test', 'as' => 'test.', 'namespace' => 'Test'], function () {
+    Route::get('phpinfo', ['as' => 'info', 'uses' => 'TestController@phpinfo']);
     Route::get('/', ['as' => 'index', 'uses' => 'TestController@index']);
+    Route::get('/excel/export', ['as' => 'index', 'uses' => 'TestController@export']);
 });
 Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function () {
     Route::get('init', ['as' => 'init', 'uses' => 'IndexController@init']);
     Route::post('login', ['as' => 'login', 'uses' => 'IndexController@login']);
     Route::get('logout', ['as' => 'logout', 'uses' => 'IndexController@logout']);
-    Route::group(['middleware' => ['auth']], function(){
+    Route::group(['middleware' => ['auth']], function () {
         Route::post('file/upload', ['as' => 'file.upload', 'uses' => 'IndexController@upload']);
+        Route::post('excel/upload', ['as' => 'file.upload', 'uses' => 'IndexController@excel']);
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
             Route::get('list', ['as' => 'list', 'uses' => 'UserController@lists']);
             Route::post('add', ['as' => 'add', 'uses' => 'UserController@add']);

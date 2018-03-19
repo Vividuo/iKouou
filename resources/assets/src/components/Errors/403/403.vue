@@ -14,7 +14,7 @@
 </template>
 
 <script>
-// import './403.scss'
+import './403.scss'
 export default {
     name: 'Error403',
     methods: {

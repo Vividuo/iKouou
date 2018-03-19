@@ -25,7 +25,12 @@ export default {
         }
     },
     props: {
-        defaultAccesses: Array
+        defaultAccesses: {
+            type: Array,
+            default () {
+                return []
+            }
+        }
     },
     watch: {
         defaultAccesses (val) {

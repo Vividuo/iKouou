@@ -60,11 +60,33 @@ class IndexController extends Controller
             ]);
         }
     }
+
+    public function excel(Request $request)
+    {
+        $text = '123';
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filePath = $file->getRealPath();
+            //$filePath = 'public\test.xlsx';
+            $text = $filePath;
+            \Excel::load($filePath, function ($reader) {
+                $data = $reader->all();
+                dd($data);
+            });
+            // \Excel::filter('chunk')->load($filePath)->chunk(250, function ($result) {
+            //     // $data = $reader->all();
+            //     dd($result);
+            // });
+        }
+        // $filePath = 'storage/exports/'.iconv('UTF-8', 'GBK', '学生成绩').'.xls';
+        return $text;
+    }
+
     public function upload(Request $request)
     {
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            if ($file->isValid()){
+            if ($file->isValid()) {
                 // 获取文件相关信息
                 $originalName = $file->getClientOriginalName(); // 文件原名
                 $ext = $file->getClientOriginalExtension();     // 扩展名

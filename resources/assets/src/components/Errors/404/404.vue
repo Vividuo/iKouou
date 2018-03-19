@@ -14,7 +14,7 @@
 </template>
 
 <script>
-// import './404.scss'
+import './404.scss'
 export default {
     name: 'Error404',
     methods: {
