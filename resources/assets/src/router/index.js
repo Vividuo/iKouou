@@ -10,9 +10,14 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.name !== 'login' && !store.state.user.name) {
-        next({name: 'login'})
-        return
+    if (!to.meta.guest) {
+        if (!store.state.user.name) {
+            next({name: 'login'})
+            return
+        } else if (!to.meta.auth && store.state.user.permissions.indexOf(to.name) < 0) {
+            next({name: '403'})
+            return
+        }
     } else if (to.name === 'login' && store.state.user.name) {
         next({name: 'dashboard'})
         return
@@ -26,23 +31,5 @@ router.afterEach((to) => {
     iView.LoadingBar.finish()
     window.scrollTo(0, 0)
 })
-
-console.log(mapRoute(routes, 'avatar.add'))
-function mapRoute (routes, target) {
-    let result
-    routes.forEach(item => {
-        if (item.name === target) {
-            result = item
-            return false
-        }
-        if (item.children) {
-            result = mapRoute(item.children, target)
-            if (result) {
-                return false
-            }
-        }
-    })
-    return result
-}
 
 export default router

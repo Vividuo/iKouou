@@ -2,6 +2,7 @@
     <Row :gutter="12">
         <Col span="18" >
             <Card>
+                <h4 slot="title">基本信息</h4>
                 <Form ref="form" :model="form" :rules="rules" :label-width="100">
                     <FormItem label="邮箱：" prop="email">
                         <Input v-model="form.email" :placeholder="user.email"/>
@@ -10,7 +11,7 @@
                         <Input v-model="form.mobile" :placeholder="user.mobile"/>
                     </FormItem>
                     <FormItem label="头像：" prop="avatar">
-                        <Avatars @on-change="handleAvatarChange"></Avatars>
+                        <Avatar-Selector @on-change="handleAvatarChange"></Avatar-Selector>
                     </FormItem>
                 </Form>
             </Card>
@@ -20,18 +21,6 @@
                 <h4 slot="title">操作</h4>
                 <Button type="primary" @click="handleSubmit">修改</Button>
             </Card>
-            <Card :style="{marginBottom: '12px'}">
-                <h4 slot="title">角色</h4>
-            </Card>
-            <Card>
-                <h4 slot="title">权限</h4>
-                <Transfer
-                    :data="source"
-                    :target-keys="target"
-                    :render-format="renderTransfer"
-                    @on-change="handleAccessChange">
-                </Transfer>
-            </Card>
         </Col>
 
     </Row>
@@ -39,10 +28,10 @@
 <script>
 import {mapState} from 'vuex'
 import api from '@/utils/api'
-import Avatars from '../Avatars'
+import AvatarSelector from '@/components/Widgets/AvatarSelector'
 export default {
     components: {
-        Avatars
+        AvatarSelector
     },
     computed: {
         ...mapState({
@@ -51,11 +40,6 @@ export default {
     },
     data () {
         return {
-            source: [
-                {key: 'test', title: '测试'},
-                {key: 'avatar', title: '头像管理'}
-            ],
-            target: [],
             form: {
                 email: '',
                 mobile: '',
@@ -73,12 +57,6 @@ export default {
         }
     },
     methods: {
-        renderTransfer (item) {
-            return item.title
-        },
-        handleAccessChange (targetKeys, directions, moveKeys) {
-            this.target = targetKeys
-        },
         handleReset () {
             this.form = {
                 email: '',

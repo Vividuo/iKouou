@@ -81,7 +81,6 @@ export default {
                 password: this.form.password
             }).then(data => {
                 this.$store.commit('updateUser', data.result.user)
-                this.$store.commit('updatePermissions', data.result.permissions)
                 this.$Message.loading({
                     content: '登录成功',
                     duration: 1,

@@ -48,5 +48,4 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'Api'], function
             Route::post('{role}/edit', ['as' => 'edit', 'uses' => 'RoleController@edit']);
         });
     });
-
 });

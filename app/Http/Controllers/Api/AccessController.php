@@ -11,20 +11,21 @@ class AccessController extends Controller
     public function lists(Request $request)
     {
         $this->authorize('lists', Access::class);
+        // $page = $request->input('page')
         $q = $request->input('q');
         $size = $request->input('size') ?: 10;
-        $query = Access::take($size);
+        // $query = Access::take($size)->skip(($page - 1) * $size);
         if ($q) {
-            $query = $query->where('slug', 'like', '%' . $q . '%');
+            $pager = Access::where('slug', 'like', '%' . $q . '%')->paginate($size);
+        } else {
+            $pager = Access::paginate($size);
         }
-        $list = $query->get();
-        $total = $query->count();
         return response()->json([
             'code' => '200',
             'msg' => '',
             'result' => [
-                'list' => $list,
-                'total' => $total
+                'list' => $pager->items(),
+                'total' => $pager->total()
             ]
         ]);
     }

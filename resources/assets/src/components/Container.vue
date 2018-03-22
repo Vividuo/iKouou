@@ -34,53 +34,20 @@
 
             </Header>
             <Layout>
-                <Sider >
-                    <Menu :active-name="$route.name" theme="dark" width="auto" :open-names="[]" @on-select="handleRedirect">
-                        <MenuItem name="dashboard">
-                            <Icon type="home"></Icon>
-                            控制台
-                        </MenuItem>
-                        <Submenu name="1">
-                            <template slot="title">
-                                <Icon type="person"></Icon>
-                                账号相关
-                            </template>
-                            <MenuItem name="user.list">用户管理</MenuItem>
-                            <MenuItem name="role">角色管理</MenuItem>
-                            <MenuItem name="access">权限管理</MenuItem>
-                            <MenuItem name="avatar.list">头像管理</MenuItem>
-                        </Submenu>
-                        <Submenu name="2">
-                            <template slot="title">
-                                <Icon type="ios-box"></Icon>
-                                项目管理
-                            </template>
-                            <MenuItem name="project.create">新建项目</MenuItem>
-                            <MenuItem name="project.list">项目列表</MenuItem>
-
-                        </Submenu>
-                        <MenuItem name="test">
-                            <Icon type="home"></Icon>
-                            测试
-                        </MenuItem>
-                        <MenuItem name="logout">
-                            <Icon type="log-out"></Icon>
-                            注销
-                        </MenuItem>
-                    </Menu>
+                <Sider>
+                    <Main-Menu></Main-Menu>
                 </Sider>
-                <Layout :style="{padding: '0 24px'}">
-                    <Breadcrumb class="layout-breadcrumb">
-                        <BreadcrumbItem v-if="$route.name !== 'dashboard'" :to="{name: 'dashboard'}">控制台</BreadcrumbItem>
-                        <BreadcrumbItem>{{ $route.meta.title }}</BreadcrumbItem>
-                    </Breadcrumb>
+                <Layout>
                     <Content>
+                        <Breadcrumb class="layout-breadcrumb">
+                            <BreadcrumbItem v-if="$route.name !== 'dashboard'" :to="{name: 'dashboard'}">控制台</BreadcrumbItem>
+                            <BreadcrumbItem>{{ $route.meta.title }}</BreadcrumbItem>
+                        </Breadcrumb>
                         <router-view></router-view>
                     </Content>
                     <Footer class="layout-footer">2017-2018 &copy; iKouOu</Footer>
                 </Layout>
             </Layout>
-
         </Layout>
     </div>
 </template>
@@ -89,7 +56,11 @@
 import './container.scss'
 import { mapState } from 'vuex'
 import api from '@/utils/api'
+import MainMenu from './Widgets/MainMenu'
 export default {
+    components: {
+        MainMenu
+    },
     data () {
         return {
             breadcrumbs: [{
@@ -103,11 +74,19 @@ export default {
     },
     computed: {
         ...mapState({
-            user: state => state.user,
-            routes: state => state.routes
+            user: state => state.user
         })
     },
     methods: {
+        filterMenu (item) {
+            if (item.children) {
+                return item.children.some(child => {
+                    return this.user.permissions.indexOf(child.name) >= 0
+                })
+            } else {
+                return this.user.permissions.indexOf(item.name) >= 0
+            }
+        },
         handleRedirect (name) {
             if (name === 'logout') {
                 api.get('/api/logout')
@@ -115,9 +94,6 @@ export default {
                 name = 'login'
             }
             this.$router.push({name})
-        },
-        handleClickUserDropdown () {
-
         }
     }
 }

@@ -15,9 +15,6 @@ api.get('/api/init').then(data => {
     if (data.result.user) {
         store.commit('updateUser', data.result.user)
     }
-    if (data.result.permissions) {
-        store.commit('updatePermissions', data.result.permissions)
-    }
     store.commit('updateToken', data.result.token)
 }).finally(() => {
     /* eslint-disable no-new */

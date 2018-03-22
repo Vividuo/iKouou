@@ -25,19 +25,19 @@ class AvatarPolicy
             return true;
         }
     }
-    
+
     public function lists(User $user)
     {
-        return $user->permissions()->contains('avatar-list');
+        return $user->permissions()->contains('avatar.list');
     }
 
     public function add(User $user)
     {
-        return $user->permissions()->contains('avatar-add');
+        return $user->permissions()->contains('avatar.add');
     }
 
     public function edit(User $user)
     {
-        return $user->permissions()->contains('avatar-edit');
+        return $user->permissions()->contains('avatar.edit');
     }
 }

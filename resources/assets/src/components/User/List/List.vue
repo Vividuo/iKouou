@@ -1,7 +1,12 @@
 <template>
     <div>
-        <Table border :columns="columns" :data="data" :style="{marginBottom: '12px'}"></Table>
-        <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
+        <Card>
+            <h4 slot="title">用户列表</h4>
+            <router-link slot="extra" :to="{name: 'user.add'}">新增用户</router-link>
+            <Table border :columns="columns" :data="data" :style="{marginBottom: '12px'}"></Table>
+            <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
+        </Card>
+
     </div>
 </template>
 <script>

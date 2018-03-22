@@ -2,6 +2,7 @@
     <Row :gutter="12" >
         <Col span="18" >
             <Card>
+                <h4 slot="title">头像信息</h4>
                 <Form ref="form" :model="form" :rules="rules" :label-width="80">
                     <FormItem label="标题：" prop="title">
                         <Input v-model="form.title" placeholder="请输入头像标题..." />

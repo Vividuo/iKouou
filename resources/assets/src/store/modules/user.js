@@ -5,7 +5,8 @@ const user = {
         name: '',
         mobile: '',
         email: '',
-        avatar: avatar
+        avatar: avatar,
+        permissions: []
     },
     mutations: {
         updateUser (state, payload) {
@@ -13,6 +14,7 @@ const user = {
             state.name = payload.username
             state.mobile = payload.mobile
             state.email = payload.email
+            state.permissions = payload.permissions
             if (payload.avatar) {
                 state.avatar = payload.avatar
             }
@@ -23,6 +25,7 @@ const user = {
             state.mobile = ''
             state.email = ''
             state.avatar = avatar
+            state.permissions = []
         }
     }
 }

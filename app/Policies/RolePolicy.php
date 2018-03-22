@@ -28,16 +28,16 @@ class RolePolicy
 
     public function lists(User $user)
     {
-        return $user->permissions()->contains('role-list');
+        return $user->permissions()->contains('role.list');
     }
 
     public function add(User $user)
     {
-        return $user->permissions()->contains('role-add');
+        return $user->permissions()->contains('role.add');
     }
 
     public function edit(User $user)
     {
-        return $user->permissions()->contains('role-edit');
+        return $user->permissions()->contains('role.edit');
     }
 }

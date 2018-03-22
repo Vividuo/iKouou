@@ -31,14 +31,20 @@ class User extends Authenticatable
     public function permissions()
     {
         $permissions = collect();
-        $this->roles->each(function ($role) use($permissions) {
-            $role->accesses->each(function ($access) use($permissions) {
+        if ($this->isSuperAdmin()) {
+            $permission = \App\Models\Access::all()->each(function ($access) use ($permissions) {
                 $permissions->push($access->slug);
             });
-        });
-        $this->accesses->each(function ($access) use($permissions) {
-            $permissions->push($access->slug);
-        });
+        } else {
+            $this->roles->each(function ($role) use ($permissions) {
+                $role->accesses->each(function ($access) use ($permissions) {
+                    $permissions->push($access->slug);
+                });
+            });
+            $this->accesses->each(function ($access) use ($permissions) {
+                $permissions->push($access->slug);
+            });
+        }
         return $permissions;
     }
 

@@ -1,33 +1,38 @@
 <template>
-    <Row class="page" :gutter="12">
-        <Col span="16" >
-            <Card :style="{marginBottom: '12px'}">
-                <h4 slot="title">权限列表</h4>
-                <Table border :columns="columns" :data="list" :style="{marginBottom: '12px'}"></Table>
-                <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
-            </Card>
-        </Col>
-        <Col span="8">
-            <Card :style="{marginBottom: '12px'}">
-                <h4 slot="title">新增权限</h4>
-                <Form ref="add-form" :model="addForm" :rules="rules" :label-width="70">
-                    <FormItem label="名称：" prop="title">
-                        <Input v-model="addForm.title" placeholder=""/>
-                    </FormItem>
-                    <FormItem label="标识符：" prop="slug">
-                        <Input v-model="addForm.slug" placeholder=""/>
-                    </FormItem>
-                </Form>
-                <Button type="primary" @click="handleAdd">新增</Button>
-            </Card>
-        </Col>
-    </Row>
+    <div>
+        <User-Menu></User-Menu>
+        <Row class="page" :gutter="12">
+            <Col span="16" >
+                <Card :style="{marginBottom: '12px'}">
+                    <h4 slot="title">权限列表</h4>
+                    <Table border :columns="columns" :data="list" :style="{marginBottom: '12px'}"></Table>
+                    <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
+                </Card>
+            </Col>
+            <Col span="8">
+                <Card :style="{marginBottom: '12px'}">
+                    <h4 slot="title">新增权限</h4>
+                    <Form ref="add-form" :model="addForm" :rules="rules" :label-width="70">
+                        <FormItem label="名称：" prop="title">
+                            <Input v-model="addForm.title" placeholder=""/>
+                        </FormItem>
+                        <FormItem label="标识符：" prop="slug">
+                            <Input v-model="addForm.slug" placeholder=""/>
+                        </FormItem>
+                    </Form>
+                    <Button type="primary" @click="handleAdd">新增</Button>
+                </Card>
+            </Col>
+        </Row>
+    </div>
 </template>
 <script>
 import api from '@/utils/api'
 import Operations from './Operations'
+import UserMenu from '../Widgets/UserMenu'
 export default {
     components: {
+        UserMenu,
         Operations
     },
     data () {

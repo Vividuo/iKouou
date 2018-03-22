@@ -1,55 +1,24 @@
-export default [{
-    path: '*',
-    redirect: {name: '404'}
-}, {
-    path: '/login',
-    name: 'login',
-    meta: {
-        title: '登录'
-    },
-    component: () => import('../components/Login')
-}, {
-    path: '/errors',
-    component: () => import('../components/Errors'),
-    children: [{
-        path: '404',
-        name: '404',
-        meta: {
-            title: '页面不存在'
-        },
-        component: () => import('../components/Errors/404')
-    }, {
-        path: '403',
-        name: '403',
-        meta: {
-            title: '没有权限'
-        },
-        component: () => import('../components/Errors/403')
-    }, {
-        path: '500',
-        name: '500',
-        meta: {
-            title: '服务器错误'
-        },
-        component: () => import('../components/Errors/500')
-    }]
-}, {
+import error from './modules/error'
+import app from './modules/app'
+export default [...error, ...app, {
     path: '/',
     component: () => import('../components/Container'),
     children: [{
         path: '',
         name: 'dashboard',
         meta: {
-            title: '控制台'
+            title: '控制台',
+            auth: true
         },
         component: () => import('../components/Dashboard')
     }, {
         path: 'profile',
         name: 'profile',
         meta: {
-            title: '修改个人信息'
+            title: '修改个人信息',
+            auth: true
         },
-        component: () => import('../components/User/Profile')
+        component: () => import('../components/Profile')
     }, {
         path: 'test',
         name: 'test',
@@ -57,6 +26,14 @@ export default [{
             title: '测试'
         },
         component: () => import('../components/Test')
+    }, {
+        path: 'charts',
+        name: 'charts',
+        meta: {
+            title: '图表',
+            auth: true
+        },
+        component: () => import('../components/Charts')
     }, {
         path: 'users',
         component: () => import('../components/User'),
@@ -84,7 +61,7 @@ export default [{
         }]
     }, {
         path: 'roles',
-        name: 'role',
+        name: 'role.list',
         meta: {
             title: '用户角色'
         },
@@ -92,7 +69,7 @@ export default [{
 
     }, {
         path: 'accesses',
-        name: 'access',
+        name: 'access.list',
         meta: {
             title: '用户权限'
         },

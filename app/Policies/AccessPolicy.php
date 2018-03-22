@@ -28,16 +28,16 @@ class AccessPolicy
 
     public function lists(User $user)
     {
-        return $user->permissions()->contains('access-list');
+        return $user->permissions()->contains('access.list');
     }
 
     public function add(User $user)
     {
-        return $user->permissions()->contains('access-add');
+        return $user->permissions()->contains('access.add');
     }
 
     public function edit(User $user)
     {
-        return $user->permissions()->contains('access-edit');
+        return $user->permissions()->contains('access.edit');
     }
 }

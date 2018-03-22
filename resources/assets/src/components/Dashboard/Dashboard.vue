@@ -1,5 +1,5 @@
 <template>
-<div class="page">
+<div>
     <Row :gutter="10" >
         <Col :md="24" :lg="8">
             <Row :gutter="10">
@@ -118,13 +118,7 @@ export default {
         })
     },
     methods: {
-        handleClick () {
-            let arr = [1, 2, 3]
-            arr = arr.map(item => {
-                return item + 1
-            })
-            console.log(...arr)
-        }
+        handleClick () {}
     }
 }
 </script>

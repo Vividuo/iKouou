@@ -14,18 +14,22 @@ class TestController extends BaseController
 
     public function index()
     {
-        $user = User::where('username', 'jiyuanxy')->first();
-        $accesses = collect();
-        $user->roles->each(function ($role) use ($accesses) {
-            $role->accesses->each(function ($access) use ($accesses) {
-                $accesses->push($access->slug);
-            });
-        });
-        $user->accesses->each(function ($access) use ($accesses) {
-            $accesses->push($access->slug);
-        });
-        //$accesses->push('user-list');
-        dd($accesses->unique());
+        for ($i = 3; $i < 100; $i ++) {
+            dispatch(new \App\Jobs\ImportExcel('test'. $i));
+        }
+
+        // $user = User::where('username', 'jiyuanxy')->first();
+        // $accesses = collect();
+        // $user->roles->each(function ($role) use ($accesses) {
+        //     $role->accesses->each(function ($access) use ($accesses) {
+        //         $accesses->push($access->slug);
+        //     });
+        // });
+        // $user->accesses->each(function ($access) use ($accesses) {
+        //     $accesses->push($access->slug);
+        // });
+        // //$accesses->push('user-list');
+        // dd($accesses->unique());
         //$user = \DB::table('users')->where('username', 'jiyuan')->first();
         //
         // if (\Hash::check('chen123', $user->password)) {

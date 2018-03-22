@@ -1,24 +1,14 @@
 <template>
-    <div class="page">
-        <Menu mode="horizontal" theme="light" :active-name="$route.name" @on-select="handleMenuSelect">
-            <MenuItem name="avatar.list">
-                <Icon type="ios-keypad"></Icon>
-                头像列表
-            </MenuItem>
-            <MenuItem name="avatar.add">
-                <Icon type="plus-round"></Icon>
-                新增头像
-            </MenuItem>
-        </Menu>
+    <div>
+        <User-Menu></User-Menu>
         <router-view></router-view>
     </div>
 </template>
 <script>
+import UserMenu from '../Widgets/UserMenu'
 export default {
-    methods: {
-        handleMenuSelect (name) {
-            this.$router.push({name})
-        }
+    components: {
+        UserMenu
     }
 }
 </script>

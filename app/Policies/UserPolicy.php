@@ -25,19 +25,19 @@ class UserPolicy
             return true;
         }
     }
-    
+
     public function lists(User $user)
     {
-        return $user->permissions()->contains('user-list');
+        return $user->permissions()->contains('user.list');
     }
 
     public function add(User $user)
     {
-        return $user->permissions()->contains('user-add');
+        return $user->permissions()->contains('user.add');
     }
 
     public function edit(User $user)
     {
-        return $user->permissions()->contains('user-edit');
+        return $user->permissions()->contains('user.edit');
     }
 }

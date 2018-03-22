@@ -8,13 +8,14 @@ use App\Models\File;
 
 class IndexController extends Controller
 {
-    public function init (Request $request)
+    public function init(Request $request)
     {
         $user = \Auth::user();
-        $permissions = $user ? $user->permissions() : [];
+        if ($user) {
+            $user->permissions = $user->permissions();
+        }
         $data = [
             'user' => $user,
-            'permissions' => $permissions,
             'token' => csrf_token()
         ];
         return response()->json([
@@ -45,12 +46,15 @@ class IndexController extends Controller
             'password' => $request->input('password')
         ];
         if (\Auth::attempt($credentials)) {
+            $user = \Auth::user();
+            if ($user) {
+                $user->permissions = $user->permissions();
+            }
             return response()->json([
                 'code' => '200',
                 'msg' => '',
                 'result' => [
-                    'user' => \Auth::user(),
-                    'permissions' => \Auth::user() ? \Auth::user()->permissions() : [],
+                    'user' => $user,
                 ]
             ]);
         } else {
@@ -69,10 +73,14 @@ class IndexController extends Controller
             $filePath = $file->getRealPath();
             //$filePath = 'public\test.xlsx';
             $text = $filePath;
-            \Excel::load($filePath, function ($reader) {
+            \Excel::load($filePath, function ($reader) use ($text) {
                 $data = $reader->all();
-                dd($data);
+                return $data->count();
+
+                // dd($text);
             });
+            return $count;
+
             // \Excel::filter('chunk')->load($filePath)->chunk(250, function ($result) {
             //     // $data = $reader->all();
             //     dd($result);

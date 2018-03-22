@@ -42,18 +42,20 @@ class UserController extends Controller
             'mobile' => ['nullable', 'regex:/^1[3|4|5|7|8][0-9]{9}$/'],
             'avatar' => 'nullable|url'
         ]);
-        if ($request->input('email'))
+        if ($request->input('email')) {
             $user->email = $request->input('email');
-        if ($request->input('mobile'))
+        }
+        if ($request->input('mobile')) {
             $user->mobile = $request->input('mobile');
-        if ($request->input('avatar'))
+        }
+        if ($request->input('avatar')) {
             $user->avatar = $request->input('avatar');
-        if ($request->input('accesses')) {
-            $user->accesses()->sync($request->input('accesses'));
         }
-        if ($request->input('roles')) {
-            $user->roles()->sync($request->input('roles'));
-        }
+
+        $user->accesses()->sync($request->input('accesses'));
+
+        $user->roles()->sync($request->input('roles'));
+
 
         $user->save();
         return response()->json([

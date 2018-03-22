@@ -1,5 +1,5 @@
 <template>
-<div>
+
     <Card>
         <Form ref="form" :label-width="80">
             <FormItem label="图标：" prop="fid">
@@ -14,7 +14,7 @@
             <input type="submit" value="提交" />
         </form>
     </Card>
-</div>
+
 </template>
 <script>
 export default {

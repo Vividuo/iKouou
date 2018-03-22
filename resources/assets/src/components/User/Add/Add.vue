@@ -23,7 +23,7 @@
             </Card>
             <Card :style="{marginBottom: '12px'}">
                 <h4 slot="title">头像</h4>
-                <Avatars @on-change="handleAvatarChange"></Avatars>
+                <Avatar-Selector @on-change="handleAvatarChange"></Avatar-Selector>
             </Card>
         </Col>
         <Col span="8">
@@ -45,12 +45,12 @@
 </template>
 <script>
 import api from '@/utils/api'
-import Avatars from '../Avatars'
-import RoleSelector from '../RoleSelector'
-import AccessSelector from '../AccessSelector'
+import AvatarSelector from '@/components/Widgets/AvatarSelector'
+import RoleSelector from '@/components/Widgets/RoleSelector'
+import AccessSelector from '@/components/Widgets/AccessSelector'
 export default {
     components: {
-        Avatars,
+        AvatarSelector,
         RoleSelector,
         AccessSelector
     },

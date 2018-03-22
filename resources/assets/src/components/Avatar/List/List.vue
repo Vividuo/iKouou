@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <Card>
+        <h4 slot="title">头像列表</h4>
+        <router-link slot="extra" :to="{name: 'avatar.add'}">新增头像</router-link>
         <div class="avatar-list">
             <Card v-for="(item, key) in data" :key="key">
                 <Tooltip :content="item.title">
@@ -8,7 +10,7 @@
             </Card>
         </div>
         <Page :current="pager.current" :total="pager.total" :page-size="pager.size" @on-change="handlePagerChange"></Page>
-    </div>
+    </Card>
 
 </template>
 
